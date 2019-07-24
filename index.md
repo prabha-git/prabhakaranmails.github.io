@@ -5,7 +5,7 @@
 
         d3.csv("https:prabhakaranmails.github.io/wdi.csv")
             .then(function (data) {
-                console.log(data[0])
+                document.write(data[0])
             }
             );
 
