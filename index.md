@@ -3,9 +3,11 @@
 <head>
     <script src="https://d3js.org/d3.v5.min.js">
 
-        d3.csv("https:prabhakaranmails.github.io/wdi.csv")
+        d3.csv("wdi.csv")
             .then(function (data) {
-                document.write(data[0])
+                d3.select("body")
+                    .append("text")
+                    .text("heloo prabha !")
             }
             );
 
@@ -13,6 +15,9 @@
 
 </head>
 
-<h1>Narrative Visualization !!!</h1>
+<body>
+    <h1>Narrative Visualization !!!</h1>
+</body>
+
 
 </html>
