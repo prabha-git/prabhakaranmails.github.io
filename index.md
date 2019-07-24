@@ -3,7 +3,7 @@
 <head>
     <script src="https://d3js.org/d3.v5.min.js"></script>
 
-    d3.csv("http://github.com/prabhakaranmails/prabhakaranmails.github.io/blob/master/wdi.csv")
+    d3.csv("https:prabhakaranmails.github.io/wdi.csv")
         .then(function(data){
             console.log(data[0])
         }
