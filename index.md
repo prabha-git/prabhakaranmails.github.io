@@ -38,7 +38,7 @@
     <script>
 
         // Dimensions of the Chart
-        var margin = { top: 20, right: 20, bottom: 30, left: 60 },
+        var margin = { top: 20, right: 20, bottom: 30, left: 0 },
             width = 960 - margin.left - margin.right,
             height = 500 - margin.top - margin.bottom;
 
@@ -157,6 +157,13 @@
                     .attr("y", function (d) { return yscale(d.CO2); })
                     .attr("font-size", "12px")
                     .text(function (d) { return d.Country; });
+
+
+
+
+
+
+
 
 
             }
