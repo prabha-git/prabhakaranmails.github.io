@@ -34,7 +34,7 @@
 </head>
 
 <body>
-
+    <h1> Polution</h1>
     <script>
 
         // Dimensions of the Chart
