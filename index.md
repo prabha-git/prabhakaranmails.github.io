@@ -40,8 +40,8 @@
         .tooltip {
             position: absolute;
             text-align: center;
-            width: 90px;
-            height: 40px;
+            width: 100px;
+            height: 60px;
             padding: 2px;
             font: 12px sans-serif;
             background: white;
@@ -210,7 +210,7 @@
                         .ease(d3.easeBounce)
                         .attr("r", 32);
 
-                    var html = d.Country + "<br/>" + "CO2 : "+format_co2(d.CO2);
+                    var html = d.Country + "<br/>" + "CO2 : "+format_co2(d.CO2)  + "<br/>" + "GDP : "+format_co2(d.GDP) 
                     tooltip.transition()
                         .duration(10)
                         .style("opacity", .9)
@@ -333,7 +333,7 @@
     </div>
 
  
-    <div class="chart",id="chart_div">
+    <div class ="chart" id="chart_div">
     <p id ="narrative_text"></p>
     <svg id="chart_svg"> </svg>
     </div>
