@@ -105,6 +105,8 @@
             "2014" : "Researchers find collapse of West Antarctic ice sheet is irreversible, will bring meters of sea-level rise over future centuries. Paris Agreement: nearly all nations pledge to set targets for their own greenhouse gas cuts and to report their progress."
         };
 
+        var format_co2=d3.format(",.2s")
+
         // Dimensions of the Chart
         var margin = { top: 20, right: 20, bottom: 30, left: 60 },
             width = 960 - margin.left - margin.right,
@@ -187,7 +189,7 @@
                     .attr("x", -height / 2)
                     .attr("y", -40)
                     .style("text-anchor", "middle")
-                    .text("CO2 in Kt")
+                    .text("CO2 in Kt (log scale)")
                     .attr("transform", "rotate(-90)")
                     .attr("fill", "white")
                     .style("font-size", 24)
@@ -208,7 +210,7 @@
                         .ease(d3.easeBounce)
                         .attr("r", 32);
 
-                    var html = d.Country + "<br/>" + d.Pop;
+                    var html = d.Country + "<br/>" + "CO2 : "+format_co2(d.CO2);
                     tooltip.transition()
                         .duration(10)
                         .style("opacity", .9)
@@ -330,6 +332,7 @@
         </button>
     </div>
 
+ 
     <div class="chart",id="chart_div">
     <p id ="narrative_text"></p>
     <svg id="chart_svg"> </svg>
