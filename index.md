@@ -106,6 +106,7 @@
         };
 
         var format_co2=d3.format(",.2s")
+        var format_gdp=d3.format("$,.2s")
 
         // Dimensions of the Chart
         var margin = { top: 20, right: 20, bottom: 30, left: 60 },
@@ -127,7 +128,7 @@
 
 
             // Loading the data from Github , if the data load is successful we need to proceed with building the graph.
-            d3.csv("https://prabhakaranmails.github.io/wdi_g20_1990.csv").then(function (data) {
+            d3.csv("https://prabhakaranmails.github.io/wdi_g20_1995.csv").then(function (data) {
 
                 // converting the text to numeric for the below variables
                 data.forEach(function (d) {
@@ -210,11 +211,11 @@
                         .ease(d3.easeBounce)
                         .attr("r", 32);
 
-                    var html = d.Country + "<br/>" + "CO2 : "+format_co2(d.CO2)  + "<br/>" + "GDP : "+format_co2(d.GDP) 
+                    var html = d.Country + "<br/>" + "CO2 : "+format_co2(d.CO2)  + "<br/>" + "GDP : "+format_gdp(d.GDP).replace(/G/g,"B");
                     tooltip.transition()
                         .duration(10)
                         .style("opacity", .9)
-                        .style("left", (d3.event.pageX + 15) + "px")
+                        .style("left", (d3.event.pageX + 30) + "px")
                         .style("top", (d3.event.pageY - 28) + "px");
                     tooltip.html(html);
 
@@ -343,7 +344,7 @@
     </div>
 
     <div id="country_text_window">
-        <p></p>
+        <p></p> 
     </div>
 
   
