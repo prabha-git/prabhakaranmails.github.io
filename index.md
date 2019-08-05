@@ -265,7 +265,7 @@
                         d3.select("#country_text_window").selectAll("*").remove();
                         d3.select("#country_text_window").append("p").text(" Country : " + d.Country).attr("fill", "white");
                         d3.select("#country_text_window").append("p").text(" Year : " + d.Time).attr("fill", "white");
-                        d3.select("#country_text_window").append("p").text(" GDP : " + d.GDP)
+                        d3.select("#country_text_window").append("p").text(" GDP : " + format_gdp(d.GDP).replace(/G/g, "B"));
                         d3.select("#country_text_window").append("p").text(" CO2 emissions (metric tons per capita) : " + d['CO2 emissions (metric tons per capita)'])
                         d3.select("#country_text_window").append("p").text(" From electricity and heat production, total (% of total fuel combustion) : " + d['from electricity and heat production, total (% of total fuel combustion)'])
                         d3.select("#country_text_window").append("p").text(" From gaseous fuel consumption (% of total) : " + d['from gaseous fuel consumption (% of total)'])
