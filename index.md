@@ -18,7 +18,7 @@
             width: 50%;
             float: left;
             padding: 15px;
-            border: 1px solid red;
+            border-top: 1px white;
         }
 
         body {
@@ -59,6 +59,7 @@
 
         #country_text_window {
             color: white;
+            border-top: 1px white;
         }
 
         .tick text {
@@ -70,11 +71,17 @@
             stroke: white;
         }
 
-        h1, p {
+        h1,
+        p {
             color: white;
         }
 
+        button:focus {
+            color: red;
+            background: blue;
+        }
 
+        
     </style>
 </head>
 
@@ -97,16 +104,16 @@
             "Saudi Arabia": "http://ontheworldmap.com/saudi-arabia/saudi-arabia-location-map-max.jpg"
         }
 
-        narrative={
+        narrative = {
             "1995": "Greenland ice cores suggest that great climate changes (at least on a regional scale) can occur in the space of a single decade. IPCC report detects 'signature' of human-caused greenhouse effect warming, declares that serious warming is likely in the coming century",
             "2000": "A 'Super El Niño' makes this an exceptionally warm year. Toyota introduces Prius, first mass-market electric hybrid car; swift progress in large wind turbines, solar electricity, and other energy alternatives. Global Climate Coalition dissolves as many corporations grapple with threat of warming.",
-            "2005" : "Third IPCC report states baldly that global warming, unprecedented since the end of the last ice age, is 'very likely' with highly damaging future impacts. Kyoto treaty goes into effect, signed by major industrial nations except US.",
-            "2010" : "Fourth IPCC report warns that serious effects of warming have become evident; cost of reducing emissions would be far less than the damage they will cause. Copenhagen conference fails to negotiate binding agreements: end of hopes of avoiding dangerous future climate change.",
-            "2014" : "Researchers find collapse of West Antarctic ice sheet is irreversible, will bring meters of sea-level rise over future centuries. Paris Agreement: nearly all nations pledge to set targets for their own greenhouse gas cuts and to report their progress."
+            "2005": "Third IPCC report states baldly that global warming, unprecedented since the end of the last ice age, is 'very likely' with highly damaging future impacts. Kyoto treaty goes into effect, signed by major industrial nations except US.",
+            "2010": "Fourth IPCC report warns that serious effects of warming have become evident; cost of reducing emissions would be far less than the damage they will cause. Copenhagen conference fails to negotiate binding agreements: end of hopes of avoiding dangerous future climate change.",
+            "2014": "Researchers find collapse of West Antarctic ice sheet is irreversible, will bring meters of sea-level rise over future centuries. Paris Agreement: nearly all nations pledge to set targets for their own greenhouse gas cuts and to report their progress."
         };
 
-        var format_co2=d3.format(",.2s")
-        var format_gdp=d3.format("$,.2s")
+        var format_co2 = d3.format(",.2s")
+        var format_gdp = d3.format("$,.2s")
 
         // Dimensions of the Chart
         var margin = { top: 20, right: 20, bottom: 30, left: 60 },
@@ -120,11 +127,11 @@
         var yscale = d3.scaleLog().range([height, 0])
 
 
-        function render(year) {
+        function render(year = 1995, country = "united States") {
 
 
             d3.select("#narrative_text")
-                .text(year +" : "+narrative[year]);
+                .text(year + " : " + narrative[year]);
 
 
             // Loading the data from Github , if the data load is successful we need to proceed with building the graph.
@@ -134,7 +141,6 @@
                 data.forEach(function (d) {
                     d.Time = parseInt(d.Time);
                     d.GDP = parseInt(d.GDP);
-                    d.HCI = parseInt(d.HCI);
                     d.Pop = parseInt(d.Pop);
                     d.CO2 = parseInt(d.CO2);
                 })
@@ -148,7 +154,7 @@
 
                 // Creating an SVG element
                 var svg = d3.select("#chart_svg")
-                    .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom+50))
+                    .attr("viewBox", "0 0 " + (width + margin.left + margin.right) + " " + (height + margin.top + margin.bottom + 50))
                     //.attr("height", height + margin.top + margin.bottom + 20)
                     //.attr("heigh",100)
                     .append("g")
@@ -211,7 +217,7 @@
                         .ease(d3.easeBounce)
                         .attr("r", 32);
 
-                    var html = d.Country + "<br/>" + "CO2 : "+format_co2(d.CO2)  + "<br/>" + "GDP : "+format_gdp(d.GDP).replace(/G/g,"B");
+                    var html = d.Country + "<br/>" + "CO2 : " + format_co2(d.CO2) + "<br/>" + "GDP : " + format_gdp(d.GDP).replace(/G/g, "B");
                     tooltip.transition()
                         .duration(10)
                         .style("opacity", .9)
@@ -249,7 +255,7 @@
                     .attr("r", 14)
                     .style("fill", "steelblue")
                     .style("opacity", .8)
-                    .style("stroke","white")
+                    .style("stroke", "white")
                     .on("mouseover", tipMouseover)
                     .on("mouseout", tipMouseout)
                     .on("click", function (d) {
@@ -260,13 +266,28 @@
                         d3.select("#country_text_window").append("p").text(" Country : " + d.Country).attr("fill", "white");
                         d3.select("#country_text_window").append("p").text(" Year : " + d.Time).attr("fill", "white");
                         d3.select("#country_text_window").append("p").text(" GDP : " + d.GDP)
-                        d3.select("#country_text_window").append("p").text(" Population : " + d.Pop)
+                        d3.select("#country_text_window").append("p").text(" CO2 emissions (metric tons per capita) : " + d['CO2 emissions (metric tons per capita)'])
+                        d3.select("#country_text_window").append("p").text(" From electricity and heat production, total (% of total fuel combustion) : " + d['From electricity and heat production, total (% of total fuel combustion)'])
+                        d3.select("#country_text_window").append("p").text(" From gaseous fuel consumption (% of total) : " + d['from gaseous fuel consumption (% of total)'])
+                        d3.select("#country_text_window").append("p").text(" From gaseous fuel consumption (kt)  : " + d['from gaseous fuel consumption (kt)'])
+                        d3.select("#country_text_window").append("p").text(" From liquid fuel consumption (% of total) : " + d['from liquid fuel consumption (% of total)'])
+                        d3.select("#country_text_window").append("p").text(" From liquid fuel consumption (kt) : " + d['from liquid fuel consumption (kt)'])
+                        d3.select("#country_text_window").append("p").text(" From manufacturing industries and construction (% of total fuel combustion) : " + d[' from manufacturing industries and construction (% of total fuel combustion)'])
+                        d3.select("#country_text_window").append("p").text(" From other sectors, excluding residential buildings and commercial and public services (% of total fuel combustion) : " + d['from other sectors, excluding residential buildings and commercial and public services (% of total fuel combustion)'])
+                        d3.select("#country_text_window").append("p").text(" From residential buildings and commercial and public services (% of total fuel combustion) : " + d['from residential buildings and commercial and public services (% of total fuel combustion)'])
+                        d3.select("#country_text_window").append("p").text(" From solid fuel consumption (% of total) : " + d['from solid fuel consumption (% of total)'])
+                        d3.select("#country_text_window").append("p").text(" From solid fuel consumption (kt) : " + d['from solid fuel consumption (kt)'])
+                        d3.select("#country_text_window").append("p").text(" From transport (% of total fuel combustion) : " + d['from transport (% of total fuel combustion)'])
+                        d3.select("#country_text_window").append("p").text(" CO2 intensity (kg per kg of oil equivalent energy use) : " + d['CO2 intensity (kg per kg of oil equivalent energy use)'])
+
 
 
                     })
                     .filter(function (d) { return (d.Time == year && d.GDP > 0 && d.CO2 > 500000); })
                     .style("fill", "red")
-                    .style("stroke","white")
+                    .style("stroke", "white");
+
+
 
 
                 // Adding text to only few countries based on the below threshold specified
@@ -287,24 +308,27 @@
         }
 
 
-        function select(year) {
+        function select(year = 1995, country = "United States") {
             d3.select("#chart_svg").selectAll("*").remove();
-            render(year)
+            render(year, country)
         }
 
         function powerOfTen(d) {
             return d / Math.pow(10, Math.ceil(Math.log(d) / Math.LN10 - 1e-12)) === 1;
         }
 
-        function myFunction() {
+        function myFunction(country = "United States", year = "1995") {
 
             var img = d3.select("#img_svg").attr("width", 350).attr("height", 200)
 
 
             img.append("g")
-                .append("svg:image").attr("xlink:href", "http://ontheworldmap.com/usa/usa-location-map-max.jpg")
+                .append("svg:image").attr("xlink:href", country_map[country])
                 .attr("width", 350)
                 .attr("heigh", 300)
+
+            d3.select("#year_2000").on("click", select('2000'));
+
 
 
         }
@@ -313,10 +337,7 @@
 
 
     <div class="myButton">
-        <button onclick="select('1995')">
-            1995
-        </button>
-        <button onclick="select('2000')">
+        <button onclick="select('2000')" id="year_2000">
             2000
         </button>
         <button onclick="select('2005')">
@@ -328,26 +349,24 @@
         <button onclick="select('2014')">
             2014
         </button>
-        <button onclick="select()">
-            Clear
-        </button>
     </div>
 
- 
-    <div class ="chart" id="chart_div">
-    <p id ="narrative_text"></p>
-    <svg id="chart_svg"> </svg>
+
+    <div class="chart" id="chart_div">
+        <p id="narrative_text"></p>
+        <svg id="chart_svg"> </svg>
     </div>
- 
+
     <div id="info_window" class="info">
         <center> <svg id="img_svg"></svg></center>
     </div>
 
-    <div id="country_text_window">
-        <p></p> 
+    <div id="country_text_window" class="info">
+        <p>Countries annotated in red on the left are the top polluters , click on the red circle on the left to get
+            more info about the country </p>
     </div>
 
-  
+
 
 
 </body>
